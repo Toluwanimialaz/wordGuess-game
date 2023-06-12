@@ -15,12 +15,11 @@ var tries=0;
 var buttonClicked=false;
 var pieceholder;
 var placeHolder;
-var take=localStorage.getItem("win");
-var take2=localStorage.getItem("loss");
+
 var pageWins=document.getElementById("win");
 var pageLosses=document.getElementById("loss");
-var win=0;
-var loss=0;
+var take=[];
+var take2=[];
 
 for(var i=0;i<word.length;i++){
     arr.push("_");
@@ -30,9 +29,16 @@ function store(){
     placeHolder=arr.join(" ");
     pieceholder=placeHolder.split(" ").join('');
     tag.textContent=placeHolder;
+    console.log(word,pieceholder)
 }
 store();
 
+function display(){
+    pageLosses.textContent= "losses: " + take2;
+    pageWins.textContent="wins: " + take;
+}
+
+display();
 
 for(var i=0;i<word.length;i++){
     barr.push(word[i]);
@@ -46,7 +52,7 @@ function destroy(){
     if(sec===-1){
         alert("you ran out of time, you lose");
     }else if(tries>15&&tries<=25){
-        alert(tries+" tries, haha you barely escaped by the skin of your arse");
+        alert(tries+" tries, haha you barely escaped by the skin of your teeth");
     }else if(tries> 25){
         alert(tries+" tries, you're awful");
     }else if(tries<15){
@@ -94,22 +100,41 @@ inp.addEventListener("keydown",function(event){
 })
 
 function storeStuff(){
-    if(sec!==-1){
-        win=take;
-        take++;
-        localStorage.setItem("win",win);
-        pageWins.textContent="wins: "+take;
-    }else if(sec===-1){
-        loss=take2;
-        localStorage.setItem("loss",loss);
-        take2++;
-        pageLosses.textContent="losses: "+take2;
+    // if(sec!==-1) {
+    //     win++;
+    //     var take=JSON.parse(localStorage.getItem("take"))||[];
+    //     take.push(win);
+    //     localStorage.setItem("win", JSON.stringify(take));
+    // }else if(sec===-1){
+    //     loss++;
+    //     var take2=JSON.parse(localStorage.getItem("take2"))||[];
+    //     take2.push
+    //     localStorage.setItem("loss",JSON.stringify(take2));
+    // }
+    var win;
+    var loss;
+
+    if(sec!==-1) {
+        
+        win = JSON.parse(localStorage.getItem("take"));
+        win++;
+        take.push(win);
+        localStorage.setItem("take", JSON.stringify(take));
+
+    } else if(sec===-1){
+        
+        loss=JSON.parse(localStorage.getItem("take2"));
+        loss++;
+        take2.push(loss);
+        localStorage.setItem("take2",JSON.stringify(take2));
+
     }
+
+    display()
 
 }
 
-pageLosses.textContent="losses: "+take2;
-pageWins.textContent="wins: "+take;
+
 
 
 
