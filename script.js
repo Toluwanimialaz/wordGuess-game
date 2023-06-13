@@ -18,6 +18,7 @@ var placeHolder;
 
 var pageWins=document.getElementById("win");
 var pageLosses=document.getElementById("loss");
+pageWins
 var take=[];
 var take2=[];
 
@@ -34,8 +35,8 @@ function store(){
 store();
 
 function display(){
-    pageLosses.textContent= "losses: " + take2;
-    pageWins.textContent="wins: " + take;
+    pageLosses.textContent= "losses: " + JSON.parse(localStorage.getItem("take2"));
+    pageWins.textContent="wins: " + JSON.parse(localStorage.getItem("take"));
 }
 
 display();
@@ -113,20 +114,24 @@ function storeStuff(){
     // }
     var win;
     var loss;
+    console.log(win);
+    console.log(take);
 
     if(sec!==-1) {
-        
-        win = JSON.parse(localStorage.getItem("take"));
-        win++;
-        take.push(win);
-        localStorage.setItem("take", JSON.stringify(take));
+        if(Object.keys(take).length === 0){
+            win = JSON.parse(localStorage.getItem("take"));
+            win++;
+            take.push(win);
+            localStorage.setItem("take", JSON.stringify(take));
+        }
 
     } else if(sec===-1){
-        
-        loss=JSON.parse(localStorage.getItem("take2"));
-        loss++;
-        take2.push(loss);
-        localStorage.setItem("take2",JSON.stringify(take2));
+        if(Object.keys(take2).length===0){
+            loss=JSON.parse(localStorage.getItem("take2"));
+            loss++;
+            take2.push(loss);
+            localStorage.setItem("take2",JSON.stringify(take2));
+        }
 
     }
 
